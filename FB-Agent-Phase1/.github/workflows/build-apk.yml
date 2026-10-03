@@ -23,17 +23,13 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Setup Gradle 8.4
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          gradle-version: '8.4'
-
-      - name: Build APK with Gradle 8.4
+      - name: Grant execute permission for gradlew
         working-directory: FB-Agent-Phase1
-        run: gradle assembleDebug --stacktrace
+        run: chmod +x gradlew
+
+      - name: Build Debug APK
+        working-directory: FB-Agent-Phase1
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
